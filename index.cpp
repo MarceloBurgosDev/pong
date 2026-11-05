@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-
+#include <iostream>
 int main() {
     // Objets
     sf::RenderWindow window(sf::VideoMode({700, 500}), "SFML funciona!");
@@ -38,7 +38,7 @@ int main() {
                 window.close();
         }
        
-      circle.move({circleSpeed, 0.f});  
+      circle.move({-circleSpeed, 0.f});  
       if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)){
         rectangle.move({0.f, speed});
       }
@@ -55,6 +55,16 @@ int main() {
         window.draw(rectangleIa);
         window.draw(hello);
         window.display();
+
+      // Collision
+      sf::FloatRect player = rectangle.getGlobalBounds();
+      sf::FloatRect ball = circle.getGlobalBounds();
+      sf::FloatRect ia = rectangleIa.getGlobalBounds();
+
+      if (const std::optional<sf::FloatRect> intersection = player.findIntersection(ball)) {
+        std::cout << "Hubo choque";
+      }
+
     }
 
     return 0;
